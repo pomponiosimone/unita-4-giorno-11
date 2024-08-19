@@ -1,0 +1,24 @@
+1)Estrai tutti i clienti con nome Mario
+select *
+from clienti
+where nome= 'Mario'
+
+2) Estrarre il nome e il cognome dei clienti nati nel 1982
+Select nome, cognome
+From clienti
+where annoDiNascita = 1982;
+
+3)Estrarre il numero delle fatture con iva al 20%
+Select numeroFattura
+From fatture
+Where iva = 20;
+
+4)Estrarre i prodotti attivati nel 2017 e che sono in produzione oppure in commercio (Per estrarre l’anno da una data si può usare EXTRACT(YEAR FROM data)
+Select *
+From Prodotti
+Where InProduzione = ‘true’ OR inCommercio= ‘true’ AND EXTRACT(YEAR FROM datAttivazione ) = 2017;
+
+5)Estrarre le fatture con importo inferiore a 1000 e i dati dei clienti ad esse collegate
+SELECT Fatture.*, Clienti.*
+FROM Fatture JOIN Clienti ON Fatture.idCliente = NumeroCliente
+WHERE Fatture.importo < 1000;
