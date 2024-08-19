@@ -1,24 +1,53 @@
 1)Estrai tutti i clienti con nome Mario
+
 select *
 from clienti
 where nome= 'Mario'
+
 
 2) Estrarre il nome e il cognome dei clienti nati nel 1982
 Select nome, cognome
 From clienti
 where annoDiNascita = 1982;
 
+
 3)Estrarre il numero delle fatture con iva al 20%
+
 Select numeroFattura
 From fatture
 Where iva = 20;
+
 
 4)Estrarre i prodotti attivati nel 2017 e che sono in produzione oppure in commercio (Per estrarre l’anno da una data si può usare EXTRACT(YEAR FROM data)
 Select *
 From Prodotti
 Where InProduzione = ‘true’ OR inCommercio= ‘true’ AND EXTRACT(YEAR FROM datAttivazione ) = 2017;
 
+
 5)Estrarre le fatture con importo inferiore a 1000 e i dati dei clienti ad esse collegate
+
 SELECT Fatture.*, Clienti.*
 FROM Fatture JOIN Clienti ON Fatture.idCliente = NumeroCliente
 WHERE Fatture.importo < 1000;
+
+
+6)Riportare l’elenco delle fatture (numero, importo, iva e data) con in aggiunta il nome del fornitore
+
+Select Fatture.numero, Fatture.importo, Fatture.iva, Fatture.dataFattura, Fornitori.denominazione
+From Fatture JOIN Fornitori ON Fatture.NumeroFornitore = NumeroFornitore;
+
+
+7)Considerando soltanto le fatture con iva al 20 per cento, estrarre il numero di fatture per ogni anno (Per estrarre l’anno da una data si può usare EXTRACT(YEAR FROM data)
+Select  EXTRACT(YEAR FROM dataFattura) AS anno, NumeroFattura
+From Fatture
+Where iva = 20
+GROUP BY anno;
+
+8)Riportare il numero di fatture e la somma dei relativi importi divisi per anno di fatturazione
+
+SELECT EXTRACT(YEAR FROM dataFattura) AS anno, 
+    COUNT(NumeroFattura) AS numero_fatture, 
+    SUM(Importo) AS somma_importi
+FROM  Fatture
+GROUP BY 
+    anno;
